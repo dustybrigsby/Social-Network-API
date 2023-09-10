@@ -9,7 +9,8 @@ module.exports = {
         try {
 
         } catch (error) {
-
+            console.log('getUsers failed', error);
+            return res.status(500).json(error);
         }
     },
 
@@ -18,7 +19,8 @@ module.exports = {
         try {
 
         } catch (error) {
-
+            console.log('getSingleUser failed', error);
+            return res.status(500).json(error);
         }
     },
 
@@ -27,7 +29,8 @@ module.exports = {
         try {
 
         } catch (error) {
-
+            console.log('createUser failed', error);
+            return res.status(500).json(error);
         }
     },
 
@@ -36,7 +39,8 @@ module.exports = {
         try {
 
         } catch (error) {
-
+            console.log('deleteUser failed', error);
+            return res.status(500).json(error);
         }
     },
 
@@ -45,7 +49,8 @@ module.exports = {
         try {
 
         } catch (error) {
-
+            console.log('addFriend failed', error);
+            return res.status(500).json(error);
         }
     },
 
@@ -54,7 +59,8 @@ module.exports = {
         try {
 
         } catch (error) {
-
+            console.log('removeFriend failed', error);
+            return res.status(500).json(error);
         }
     },
 

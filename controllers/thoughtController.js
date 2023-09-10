@@ -7,9 +7,11 @@ module.exports = {
     // Get all thoughts
     async getThoughts(req, res) {
         try {
-
+            const users = await User.find();
+            return res.json(users);
         } catch (error) {
-
+            console.log('getThoughts failed', error);
+            return res.status(500).json(error);
         }
     },
 
@@ -18,7 +20,8 @@ module.exports = {
         try {
 
         } catch (error) {
-
+            console.log('getSingleThought failed', error);
+            return res.status(500).json(error);
         }
     },
 
@@ -27,7 +30,8 @@ module.exports = {
         try {
 
         } catch (error) {
-
+            console.log('createThought failed', error);
+            return res.status(500).json(error);
         }
     },
 
@@ -36,7 +40,8 @@ module.exports = {
         try {
 
         } catch (error) {
-
+            console.log('updateThought failed', error);
+            return res.status(500).json(error);
         }
     },
 
@@ -45,7 +50,8 @@ module.exports = {
         try {
 
         } catch (error) {
-
+            console.log('deleteThought failed', error);
+            return res.status(500).json(error);
         }
     },
 
@@ -54,7 +60,8 @@ module.exports = {
         try {
 
         } catch (error) {
-
+            console.log('addReaction failed', error);
+            return res.status(500).json(error);
         }
     },
 
@@ -63,7 +70,8 @@ module.exports = {
         try {
 
         } catch (error) {
-
+            console.log('deleteReaction failed', error);
+            return res.status(500).json(error);
         }
     },
 
