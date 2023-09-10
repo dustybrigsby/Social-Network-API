@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/dustybrigsby/Social-Network-API#readme",
   "dependencies": {
+    "dayjs": "^1.11.9",
     "express": "^4.18.2",
     "mongoose": "^7.5.0"
   },
