@@ -42,7 +42,13 @@ const thoughtSchema = new Schema({
         },
     },
     username: {
-        type: Schema.Types.ObjectId,
+        type: String,
+        required: true,
+        ref: 'user',
+    },
+    userId: {
+        type: ObjectId,
+        required: true,
         ref: 'user',
     },
     reactions: [reactionSchema],
