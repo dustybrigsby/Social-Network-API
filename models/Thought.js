@@ -1,5 +1,5 @@
+const { ObjectId } = require('mongoose').Types;
 const { Schema, model } = require('mongoose');
-const { ObjectId } = require('bson');
 const dayjs = require('dayjs');
 
 const reactionSchema = new Schema({
@@ -16,12 +16,6 @@ const reactionSchema = new Schema({
     username: {
         type: String,
         required: true,
-        ref: 'user',
-    },
-    userId: {
-        type: ObjectId,
-        required: true,
-        ref: 'user',
     },
     createdAt: {
         type: Date,
@@ -30,7 +24,11 @@ const reactionSchema = new Schema({
             return dayjs(timestamp).format('M-D-YYYY [at] h:MM a');
         },
     },
-});
+},
+    {
+        _id: false
+    }
+);
 
 const thoughtSchema = new Schema({
     thoughtText: {
@@ -49,7 +47,6 @@ const thoughtSchema = new Schema({
     username: {
         type: String,
         required: true,
-        ref: 'user',
     },
     userId: {
         type: ObjectId,
@@ -60,7 +57,7 @@ const thoughtSchema = new Schema({
 },
     {
         toJSON: {
-            virtuals: true,
+            getters: true,
         },
         id: false,
     }
@@ -75,6 +72,6 @@ thoughtSchema
     });
 
 // Initialize Thought model
-const User = model('thought', thoughtSchema);
+const Thought = model('thought', thoughtSchema);
 
-module.exports = User;
+module.exports = { Thought };

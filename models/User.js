@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongoose').Types;
 const { Schema, model } = require('mongoose');
 
 const userSchema = new Schema(
@@ -22,17 +23,17 @@ const userSchema = new Schema(
             },
         },
         thoughts: [{
-            type: Schema.Types.ObjectId,
+            type: ObjectId,
             ref: 'thought',
         }],
         friends: [{
-            type: Schema.Types.ObjectId,
-            ref: 'user',
+            type: ObjectId,
+            ref: 'user'
         }],
     },
     {
         toJSON: {
-            virtuals: true,
+            getters: true,
         },
         id: false,
     }
@@ -49,4 +50,4 @@ userSchema
 // Initialize User model
 const User = model('user', userSchema);
 
-module.exports = User;
+module.exports = { User };
