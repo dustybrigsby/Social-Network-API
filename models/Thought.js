@@ -3,10 +3,6 @@ const { Schema, model } = require('mongoose');
 const dayjs = require('dayjs');
 
 const reactionSchema = new Schema({
-    reactionId: {
-        type: ObjectId,
-        default: new ObjectId,
-    },
     reactionBody: {
         type: String,
         required: true,
@@ -24,10 +20,7 @@ const reactionSchema = new Schema({
             return dayjs(timestamp).format('M-D-YYYY [at] h:MM a');
         },
     },
-},
-    {
-        _id: false
-    }
+}
 );
 
 const thoughtSchema = new Schema({

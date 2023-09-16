@@ -72,7 +72,7 @@ module.exports = {
     // Delete a  user
     async deleteUser(req, res) {
         try {
-            const user = await User.findByIdAndDelete(req.params.userId);
+            const user = await User.findById(req.params.userId);
 
             if (!user) {
                 return res.status(404).json({ message: `No user exists with ID: ${req.params.userId}` });
@@ -86,11 +86,12 @@ module.exports = {
             await Thought.updateMany(
                 {
                     $pull: {
-                        reactions: { userId: req.params.userId }
+                        reactions: { username: user.username }
                     }
                 }
             );
-            res.json(user);
+            await User.findByIdAndDelete(req.params.userId);
+            res.json({ message: 'User successfully deleted' });
 
         } catch (error) {
             console.log('deleteUser failed', error);
@@ -101,7 +102,7 @@ module.exports = {
     // Add another user as a friend
     async addFriend(req, res) {
         try {
-            const newFriend = await User.findOne(
+            const newFriend = await User.findById(
                 { _id: req.body.friendId }
             );
 
@@ -135,7 +136,7 @@ module.exports = {
     // Remove a friend
     async removeFriend(req, res) {
         try {
-            const exFriend = await User.findOne(
+            const exFriend = await User.findById(
                 { _id: req.body.friendId }
             );
 
@@ -154,7 +155,7 @@ module.exports = {
             }
 
             console.log(`Removed ${exFriend} as a friend of ${user}`);
-            res.json(exFriend);
+            res.json(user.friends);
 
         } catch (error) {
             console.error('removeFriend failed', error);

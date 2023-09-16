@@ -22,7 +22,7 @@ module.exports = {
             if (!thought) {
                 return res.status(404).json({ message: 'No thought with that ID' });
             }
-            res.json(user);
+            res.json(thought);
         } catch (error) {
             console.log('getSingleThought failed', error);
             return res.status(500).json(error);
@@ -39,7 +39,7 @@ module.exports = {
                 { new: true },
             );
 
-            console.log(`${user}'s thought created!`);
+            console.log(`${user.username}'s thought created!`);
             res.json(thought);
 
         } catch (error) {
@@ -55,7 +55,11 @@ module.exports = {
                 req.params.thoughtId,
                 req.body,
             );
-            res.json(thought);
+
+            if (!thought) {
+                return res.status(404).json({ message: `No thought exists with ID: ${req.params.thoughtId}` });
+            }
+            res.json({ message: 'Thought successfully updated' });
 
         } catch (error) {
             console.log('updateThought failed', error);
@@ -66,14 +70,17 @@ module.exports = {
     // Delete a thought
     async deleteThought(req, res) {
         try {
-            const thought = await Thought.findByIdAndDelete(req.params.thoughtId);
+            const thought = await Thought.findById(req.params.thoughtId);
 
             if (!thought) {
                 return res.status(404).json({ message: `No thought exists with ID: ${req.params.thoughtId}` });
+            } else {
+                await Thought.findByIdAndDelete(req.params.thoughtId);
+                res.json({ message: 'Thought successfully deleted' });
             }
 
         } catch (error) {
-            console.log('deleteThought failed', error);
+            console.log('deleteThought failed\n', error);
             return res.status(500).json(error);
         }
     },
@@ -81,6 +88,17 @@ module.exports = {
     // Add a reaction to a thought
     async addReaction(req, res) {
         try {
+            const thought = await Thought.findById(req.params.thoughtId);
+            const newReaction = await thought.reactions.create(req.body);
+
+            console.log(newReaction);
+
+            thought.reactions.push(newReaction);
+
+            await thought.save();
+
+            console.log('Reaction successfully created');
+            res.json(thought.reactions);
 
         } catch (error) {
             console.log('addReaction failed', error);
@@ -91,6 +109,18 @@ module.exports = {
     // Delete a reaction
     async deleteReaction(req, res) {
         try {
+            const thought = await Thought.findById(req.params.thoughtId);
+
+            thought.reactions.id(req.body.reactionId).deleteOne();
+
+            await thought.save();
+
+            if (!thought) {
+                return res.status(404).json({ message: `No user exists with ID: ${req.params.thoughtId}` });
+            }
+
+            console.log('Reaction successfully deleted');
+            res.json(thought);
 
         } catch (error) {
             console.log('deleteReaction failed', error);
