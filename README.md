@@ -73,7 +73,7 @@ N/A
 
 ## Questions?
 
-[Tech Blog GitHub Repository](https://github.com/dustybrigsby/Tech-Blog)
+[GitHub Repository](https://github.com/dustybrigsby/Social-Network-API)
 
 If not found there, you can email me at:
 
